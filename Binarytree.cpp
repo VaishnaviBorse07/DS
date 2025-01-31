@@ -21,11 +21,11 @@ void emp::create()
  cin>>root->id>>root->name>>root->add>>root->salary;
  root->LC=root->RC=NULL;
  do{
-    cout<<"do you want to continued (0/1):";
+    cout<<"Do you want to continue (Yes=1/No=0):";
     cin>>ch;
     if(ch==1) {
     next=new emp;
-    cout<<"enter new info:";
+    cout<<"Enter New Employee information:";
     cin>>next->id>>next->name>>next->add>>next->salary;
     next->RC=next->LC=NULL;
     insert(root,next);
@@ -71,7 +71,7 @@ int main()
   int choice;
   do{
   cout<<"\nMenu\n1.Create\n2.Display\n3.Exit";
-  cout<<"enter your choice";
+  cout<<"Enter your choice";
   cin>>choice;
   switch(choice)
   {
@@ -85,3 +85,4 @@ int main()
   }while(choice!=3);
  return 0;
 }
+
