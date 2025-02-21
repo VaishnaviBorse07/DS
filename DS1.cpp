@@ -7,44 +7,44 @@ public:
     stud *lc, *rc;
     int rollno;
     string name;
-    string add;
+    string surname;
     void create();
     void insert(stud *root, stud *next);
     void display(stud *root);
     void displayparent(stud *root);
     void displayleaf(stud *root);
-    int height(stud *root);
-    void displayinorder(stud *root);
+    int calculatelength(stud *root);
     void displaypreorder(stud *root);
     void displaypostorder(stud *root);
     void mirrorimage(stud *root);
     void updatetree(stud *root);
+    void search(stud *root,int k);
 } *root = NULL, t, *stack[100];
 void stud::create()
 {
     int ch;
     root = new stud;
 
-    cout << "Enter the name of the student:";
+    cout << "enter the name of the employee";
     cin >> root->name;
-    cout << "Enter the address of the student:";
-    cin >> root->add;
-    cout << "Enter the rollno of the student:";
+    cout << "enetr the surname of the employee";
+    cin >> root->surname;
+    cout << "enetr the rollno of the employee";
     cin >> root->rollno;
     root->lc = NULL;
     root->rc = NULL;
     do
     {
-        cout << "Do you want to insert another node press 1 or yes and 0 for no:";
+        cout << "do you want to insert another node press 1 or yes and 0 for no";
         cin >> ch;
         if (ch == 1)
         {
             stud *next = new stud;
-            cout << "Enter the name of the next student:";
+            cout << "enetr the name of the next employee";
             cin >> next->name;
-            cout << "Enter the address of the student:";
-            cin >> next->add;
-            cout << "Enter the rollno of the next student:";
+            cout << "enetr the surname of the employee";
+            cin >> next->surname;
+            cout << "enetr the rollno of the next employeee";
             cin >> next->rollno;
             next->lc = next->rc = NULL;
             insert(root, next);
@@ -55,7 +55,7 @@ void stud::create()
 void stud::insert(stud *root, stud *next)
 {
     char choice;
-    cout << "Enter on which side of " << root->rollno << "do you want to insert new node(l/r)";
+    cout << "enter on which side of " << root->rollno << "do you want to insert new node(l/r)";
     cin >> choice;
     if (choice == 'l' || choice == 'L')
     {
@@ -96,7 +96,7 @@ void stud::insert(stud *root, stud *next)
 // }
 void stud::displayparent(stud *root)
 {
-    cout << root->name << "\t" << root->add << "\t" << root->rollno << endl;
+    cout << root->name << "\t" << root->surname << "\t" << root->rollno << endl;
 }
 void stud::displayleaf(stud *root)
 {
@@ -106,7 +106,7 @@ void stud::displayleaf(stud *root)
     }
     if (root->lc == NULL && root->rc == NULL)
     {
-        cout << root->name << "\t" << root->add << "\t" << root->rollno << endl;
+        cout << root->name << "\t" << root->surname << "\t" << root->rollno << endl;
     }
     displayleaf(root->lc);
     displayleaf(root->rc);
@@ -130,36 +130,12 @@ void stud::display(stud *root)
             {
                 temp = stack[top];
                 top--;
-                cout << temp->rollno << "\t" << temp->name << "\t" << temp->add << endl;
+                cout << temp->rollno << "\t" << temp->name << "\t" << temp->surname << endl;
                 temp = temp->rc;
             }
         }
 
         while (top != -1 || temp != NULL);
-    }
-}
-void stud::displayinorder(stud *root)
-{
-    int top = -1;
-    stud *temp = root;
-    if (root != NULL)
-    {
-        do
-        {
-            while (temp != NULL)
-            {
-                top++;
-                stack[top] = temp;
-                temp = temp->lc;
-                cout << temp->rollno << "\t" << temp->name << "\t" << temp->add << endl;
-            }
-            if (top != -1)
-            {
-                temp = stack[top];
-                top--;
-                temp = temp->rc;
-            }
-        } while (temp != NULL || top != -1);
     }
 }
 void stud::displaypreorder(stud *root)
@@ -174,7 +150,7 @@ void stud::displaypreorder(stud *root)
             {
                 top++;
                 stack[top] = temp;
-                cout << temp->rollno << "\t" << temp->name << "\t" << temp->add << endl;
+                cout << temp->rollno << "\t" << temp->name << "\t" << temp->surname << endl;
                 temp = temp->lc;
             }
             if (top != -1)
@@ -204,13 +180,13 @@ void stud::displaypostorder(stud *root)
             {
                 temp = stack[top];
                 top--;
-                cout << temp->rollno << "\t" << temp->name << "\t" << temp->add << endl;
+                cout << temp->rollno << "\t" << temp->name << "\t" << temp->surname << endl;
                 temp = temp->rc;
             }
         } while (temp != NULL || top != -1);
     }
 }
-int stud::height(stud *root)
+int stud::calculatelength(stud *root)
 {
     int lht, rht, fht;
     if (root == NULL)
@@ -219,8 +195,8 @@ int stud::height(stud *root)
     }
     else
     {
-        lht = height(root->lc);
-        rht = height(root->rc);
+        lht = calculatelength(root->lc);
+        rht = calculatelength(root->rc);
         if (lht > rht)
         {
             fht = lht + 1;
@@ -253,30 +229,41 @@ void stud::updatetree(stud *root)
     {
         return;
     }
-    else
-    {
         int Rollno;
         string newname, newsurname;
-        while (root != NULL)
-        {
+        cout<<"enter rollno";
+        cin>>Rollno;
+        cout<<"enter new name";
+        cin>>newname;
+        cout<<"enetr new surname";
+        cin>>newsurname;
             if (root->rollno == Rollno)
             {
-                cout << "Enter the new information for " << root->rollno;
-                cin >> root->name >> root->add;
                 root->name = newname;
-                root->add = newsurname;
+                root->surname = newsurname;
+                return;
             }
             updatetree(root->lc);
             updatetree(root->lc);
         }
+    void stud::search(stud* root,int k){
+        if(root==NULL){
+            return;
+        }
+        if(root->rollno==k){
+            cout<<root->rollno<<"\t"<<root->name<<"\t"<<root->surname<<"\n";
+            return;
+        }
+ search(root->lc,k);
+ search(root->rc,k);
     }
-}
+
 int main()
 {
     int ch;
     do
     {
-        cout << "\n1.Insert a node\n2.Display\n3.Display parent only\n4.Display only leaf node\n5.Display the height of the tree\n6.Display by inorder\n7.Display by preorder\n8.Display post order\n9.Mirror image\n10.Update tree\nEnter your choice:";
+        cout << "\n1.insert a node\n2.display\n3.display parent only\n4.display only leaf node\n5.display the height of the tree\n6.display by preorder\n7.display post order\n8.mirror image\n9.update tree\n10search a node";
         cin >> ch;
         switch (ch)
         {
@@ -295,26 +282,26 @@ int main()
         case 5:
             if (root != NULL)
             {
-                int j = t.height(root);
-                cout << "Height of the tree is " << j << endl;
+                int j = t.calculatelength(root);
+                cout << "height of the tree is " << j << endl;
             }
             break;
         case 6:
-            t.displayinorder(root);
-            break;
-        case 7:
             t.displaypreorder(root);
             break;
-        case 8:
+        case 7:
             t.displaypostorder(root);
             break;
-        case 9:
+        case 8:
             t.mirrorimage(root);
             break;
-        case 10:
+        case 9:
             t.updatetree(root);
             break;
+        case 10:
+        int k;
+        cin>>k;
+        t.search(root,k);
         }
     } while (ch != 0);
-    return 0;
 }
